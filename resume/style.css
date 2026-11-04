@@ -1,0 +1,649 @@
+/* ============================================================
+   BATMAN'S RESUME  |  stylesheet
+   ------------------------------------------------------------
+   1. Design tokens (same colors as the belt page)
+   2. Base
+   3. Toolbar and progress bar
+   4. The sheet (the paper)
+   5. Header (name, rotating title, numbers)
+   6. Layout grid
+   7. Sidebar (photo, contact, skills, chips, languages)
+   8. Main column (summary, experience, training, awards, references)
+   9. Reveal on scroll
+   10. Phone layout
+   11. Reduced motion
+   12. PRINT (turns it into a clean white paper resume)
+   ============================================================ */
+
+
+/* ---------- 1. TOKENS ---------- */
+:root {
+    --bg: #07080b;
+    --sheet: #0d1017;
+    --panel: #131824;
+    --line: #232a38;
+    --text: #e9edf4;
+    --muted: #9aa4b6;
+    --gold: #f5c518;
+    --gold-deep: #b8860b;
+    --gold-light: #fff1a8;
+
+    --font-display: "Bebas Neue", Impact, "Arial Narrow", sans-serif;
+    --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --ease-out: cubic-bezier(.2, .8, .2, 1);
+    --radius: 14px;
+}
+
+
+/* ---------- 2. BASE ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    padding: 84px 16px 60px;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15.5px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    /* a faint bat pattern behind the sheet, drawn with a tiny inline SVG */
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(245, 197, 24, .08), transparent 60%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80' viewBox='0 0 100 40'%3E%3Cpath fill='%23ffffff' fill-opacity='.025' d='M50 9 L52.5 2 L54.5 9.5 C62 8 70 10 74 15 C78 9 88 6 100 8 C92 12 90 20 92 28 C86 24 78 25 74 31 C70 27 62 28 58 34 C55 30 52 31 50 38 C48 31 45 30 42 34 C38 28 30 27 26 31 C22 25 14 24 8 28 C10 20 8 12 0 8 C12 6 22 9 26 15 C30 10 38 8 45.5 9.5 L47.5 2 Z'/%3E%3C/svg%3E"),
+        var(--bg);
+    -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--gold); }
+h1, h2, h3 { margin: 0; font-weight: 400; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+::selection { background: var(--gold); color: #000; }
+
+
+/* ---------- 3. TOOLBAR AND PROGRESS BAR ---------- */
+.progress-bar {   /* CATALOG: "Top progress bar" */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 60;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold-deep), var(--gold), var(--gold-light));
+    transform: scaleX(var(--p, 0));
+    transform-origin: left;
+}
+
+.toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px clamp(16px, 4vw, 40px);
+    background: rgba(7, 8, 11, .8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+}
+.tool-link {
+    color: var(--muted);
+    font-weight: 600;
+    font-size: .92rem;
+    text-decoration: none;
+    transition: color .2s;
+}
+.tool-link:hover { color: var(--gold); }
+
+.tool-btn {
+    position: relative;
+    overflow: hidden;
+    padding: 10px 20px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--gold);
+    color: #000;
+    font: 700 .9rem var(--font-body);
+    cursor: pointer;
+    transition: transform .2s var(--ease-out);
+}
+.tool-btn:hover { transform: translateY(-2px); }
+
+/* CATALOG: "Button shine" */
+.shine::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .7), transparent);
+    transform: skewX(-20deg);
+    animation: shine 3.5s ease-in-out infinite 1.5s;
+}
+@keyframes shine { 0% { left: -60%; } 35%, 100% { left: 130%; } }
+
+
+/* ---------- 4. THE SHEET ---------- */
+.sheet {
+    max-width: 1040px;
+    margin: 0 auto;
+    background: var(--sheet);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 50px 100px -40px rgba(0, 0, 0, .9), 0 0 0 1px rgba(245, 197, 24, .06);
+}
+
+
+/* ---------- 5. HEADER ---------- */
+/* CATALOG: "Cursor spotlight"  |  --mx and --my come from script.js */
+.resume-header {
+    --mx: 30%;
+    --my: 40%;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 28px;
+    padding: 48px clamp(22px, 5vw, 56px) 40px;
+    border-bottom: 1px solid var(--line);
+    background:
+        radial-gradient(420px circle at var(--mx) var(--my), rgba(245, 197, 24, .13), transparent 60%),
+        linear-gradient(160deg, #10141e, #0a0c12);
+}
+/* thin gold stripe across the top, like the belt itself */
+.resume-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--gold-deep), var(--gold), var(--gold-light), var(--gold), var(--gold-deep));
+}
+
+.eyebrow {
+    margin: 0 0 6px;
+    color: var(--gold);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .24em;
+    text-transform: uppercase;
+}
+
+.name {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 11vw, 7rem);
+    line-height: .9;
+    letter-spacing: .03em;
+}
+/* CATALOG: "Masked line rise" */
+.name .line { display: block; overflow: hidden; padding-bottom: .04em; }
+.name .line > span {
+    display: inline-block;
+    transform: translateY(110%);
+    animation: rise 1s var(--ease-out) .1s forwards;
+}
+@keyframes rise { to { transform: none; } }
+
+.role {
+    margin: 10px 0 8px;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+    letter-spacing: .04em;
+    color: var(--muted);
+}
+/* CATALOG: "Rotating word"
+   The word box hides overflow. script.js swaps the word, and the
+   .out and .in classes slide the old one up and the new one in. */
+.rotator {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    color: var(--gold);
+}
+.rotator-word {
+    display: inline-block;
+    transition: transform .45s var(--ease-out), opacity .45s;
+}
+.rotator-word.out { transform: translateY(-100%); opacity: 0; }
+.rotator-word.in  { transform: translateY(100%);  opacity: 0; transition: none; }
+
+.tagline { margin: 0; color: var(--muted); max-width: 520px; }
+
+/* the three headline numbers */
+.kpis {
+    display: flex;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.kpis li {
+    min-width: 108px;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, .02);
+    text-align: center;
+}
+.kpi-num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2.6rem;
+    line-height: 1;
+    color: var(--gold);
+    font-variant-numeric: tabular-nums;
+}
+.kpi-label { color: var(--muted); font-size: .76rem; }
+
+
+/* ---------- 6. LAYOUT ---------- */
+.layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+}
+
+
+/* ---------- 7. SIDEBAR ---------- */
+.sidebar {
+    padding: 36px 28px;
+    border-right: 1px solid var(--line);
+    background: rgba(255, 255, 255, .015);
+}
+
+.photo {
+    margin: 0 0 30px;
+    padding: 8px;
+    border-radius: var(--radius);
+    background: linear-gradient(160deg, var(--gold), var(--gold-deep));
+}
+.photo img { border-radius: 9px; aspect-ratio: 1 / 1; object-fit: cover; object-position: 50% 12%; }
+/* CATALOG: "Photo that develops like a Polaroid" */
+.js .photo img { filter: brightness(.15) sepia(.8) blur(6px); transition: filter 2.2s ease-out .3s; }
+.js .photo.is-in img { filter: none; }
+
+.side-block { margin-bottom: 30px; }
+.side-block h2,
+.block h2 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    letter-spacing: .06em;
+    color: var(--text);
+}
+/* a short gold line after each heading */
+.side-block h2::after,
+.block h2::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    opacity: .5;
+}
+
+address { font-style: normal; }
+.contact, .plain, .skills, .chips { margin: 0; padding: 0; list-style: none; }
+.contact li { display: flex; gap: 10px; margin-bottom: 8px; color: var(--muted); font-size: .9rem; word-break: break-word; }
+.contact a { color: var(--text); text-decoration: none; }
+.contact a:hover { color: var(--gold); }
+.ico { width: 18px; flex: none; color: var(--gold); text-align: center; }
+
+/* CATALOG: "Result bars and rings"
+   The inner span grows from 0 to --level when the block scrolls in. */
+.skills li { margin-bottom: 12px; }
+.skill-name { display: block; font-size: .88rem; font-weight: 600; margin-bottom: 5px; }
+.bar {
+    display: block;
+    height: 6px;
+    border-radius: 6px;
+    background: var(--line);
+    overflow: hidden;
+}
+.bar span {
+    display: block;
+    height: 100%;
+    width: var(--level);
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--gold-deep), var(--gold), var(--gold-light));
+    box-shadow: 0 0 10px rgba(245, 197, 24, .5);
+    transition: width 1.4s var(--ease-out);
+}
+.js .side-block.reveal .bar span { width: 0; }
+.js .side-block.reveal.is-in .bar span { width: var(--level); }
+/* each bar starts a little later than the one above it */
+.skills li:nth-child(2) .bar span { transition-delay: .08s; }
+.skills li:nth-child(3) .bar span { transition-delay: .16s; }
+.skills li:nth-child(4) .bar span { transition-delay: .24s; }
+.skills li:nth-child(5) .bar span { transition-delay: .32s; }
+.skills li:nth-child(6) .bar span { transition-delay: .40s; }
+.skills li:nth-child(7) .bar span { transition-delay: .48s; }
+
+/* CATALOG: "Icon micro reactions"  |  chips lift and glow on hover */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips li {
+    padding: 5px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--panel);
+    font-size: .8rem;
+    transition: translate .2s var(--ease-out), border-color .2s, box-shadow .2s;
+}
+.chips li:hover { translate: 0 -2px; border-color: var(--gold); box-shadow: 0 6px 16px -8px rgba(245, 197, 24, .6); }
+.chips a { text-decoration: none; font-weight: 600; }
+
+.plain li { color: var(--muted); font-size: .9rem; margin-bottom: 4px; }
+
+
+/* ---------- 8. MAIN COLUMN ---------- */
+.main { padding: 36px clamp(22px, 4vw, 44px); }
+.block { margin-bottom: 38px; }
+.block:last-child { margin-bottom: 0; }
+
+.summary { margin: 0; color: var(--muted); font-size: 1.02rem; }
+
+/* CATALOG: "Highlighter sweep"
+   <mark> gets a gold gradient background that starts at 0 width
+   and sweeps to full when the section scrolls in. */
+mark {
+    color: var(--text);
+    padding: 0 3px;
+    background: linear-gradient(90deg, rgba(245, 197, 24, .35), rgba(245, 197, 24, .35)) left 85% / 100% 45% no-repeat;
+    transition: background-size 1s var(--ease-out) .4s;
+}
+.js .block.reveal mark { background-size: 0% 45%; }
+.js .block.reveal.is-in mark { background-size: 100% 45%; }
+
+/* CATALOG: "Timeline that draws itself"
+   ::before is the dim track, ::after the gold line. --draw is
+   updated by script.js while you scroll. */
+.timeline {
+    --draw: 0%;
+    position: relative;
+    padding-left: 30px;
+}
+.timeline::before,
+.timeline::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 8px;
+    width: 2px;
+    border-radius: 2px;
+}
+.timeline::before { bottom: 8px; background: var(--line); }
+.timeline::after {
+    height: var(--draw);
+    max-height: calc(100% - 16px);
+    background: linear-gradient(180deg, var(--gold-light), var(--gold));
+    box-shadow: 0 0 10px rgba(245, 197, 24, .6);
+}
+html:not(.js) .timeline::after { height: calc(100% - 16px); }
+
+.job { position: relative; margin-bottom: 26px; }
+.job:last-child { margin-bottom: 0; }
+.job::before {   /* the dot */
+    content: "";
+    position: absolute;
+    left: -30px;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--sheet);
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 0 4px var(--sheet);
+}
+.job h3 {
+    font-family: var(--font-display);
+    font-size: 1.55rem;
+    letter-spacing: .04em;
+    line-height: 1.1;
+}
+.meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 16px;
+    margin: 2px 0 8px;
+    font-size: .85rem;
+}
+.org { color: var(--gold); font-weight: 600; }
+.meta time { color: var(--muted); font-weight: 600; letter-spacing: .04em; }
+.job ul { margin: 0; padding-left: 18px; color: var(--muted); }
+.job li { margin-bottom: 4px; }
+.job li::marker { color: var(--gold); }
+
+/* Training cards. CATALOG: "Scroll cascade" (delays below) */
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.card {
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--panel);
+    transition: opacity .7s var(--ease-out), transform .7s var(--ease-out), border-color .25s;
+}
+.card:hover { border-color: rgba(245, 197, 24, .5); }
+.card h3 { font-family: var(--font-display); font-size: 1.3rem; letter-spacing: .04em; color: var(--gold); }
+.card p { margin: 4px 0 0; color: var(--muted); font-size: .9rem; }
+.js .block.reveal .card { opacity: 0; transform: translateY(18px); }
+.js .block.reveal.is-in .card { opacity: 1; transform: none; }
+.card:nth-child(2) { transition-delay: .1s; }
+.card:nth-child(3) { transition-delay: .2s; }
+.card:nth-child(4) { transition-delay: .3s; }
+
+/* CATALOG: "Badge stamp"
+   Badges start big and see through, then slam down to normal
+   size with a little overshoot, like a rubber stamp. */
+.badges { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.badges li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border: 1px dashed rgba(245, 197, 24, .4);
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: .93rem;
+}
+.badges small { color: var(--muted); font-weight: 400; }
+.badge-icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: #000;
+}
+.js .block.reveal .badges li { opacity: 0; transform: scale(1.6) rotate(-6deg); }
+.js .block.reveal.is-in .badges li { animation: stamp .5s cubic-bezier(.3, 1.6, .5, 1) forwards; }
+.js .block.reveal.is-in .badges li:nth-child(2) { animation-delay: .25s; }
+.js .block.reveal.is-in .badges li:nth-child(3) { animation-delay: .5s; }
+@keyframes stamp { to { opacity: 1; transform: none; } }
+
+/* References */
+.refs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.refs blockquote {
+    position: relative;
+    margin: 0;
+    padding: 18px 16px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--panel);
+    transition: translate .25s var(--ease-out), border-color .25s;
+}
+.refs blockquote:hover { translate: 0 -4px; border-color: rgba(245, 197, 24, .5); }
+.refs blockquote::before {   /* a big gold quote mark */
+    content: "\201C";
+    position: absolute;
+    top: -6px;
+    right: 12px;
+    font-family: Georgia, serif;
+    font-size: 3.4rem;
+    color: rgba(245, 197, 24, .25);
+}
+.refs p { margin: 0 0 12px; font-size: .88rem; font-style: italic; color: var(--text); }
+.refs footer { font-weight: 700; font-size: .85rem; color: var(--gold); }
+.refs footer span { display: block; font-weight: 400; color: var(--muted); font-size: .78rem; }
+
+.sheet-footer {
+    padding: 16px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--muted);
+    font-size: .8rem;
+}
+.sheet-footer p { margin: 0; }
+
+
+/* ---------- 9. REVEAL ON SCROLL ---------- */
+/* CATALOG: "Staggered blur rise" */
+.js .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    filter: blur(5px);
+    transition: opacity .8s var(--ease-out), transform .8s var(--ease-out), filter .8s var(--ease-out);
+}
+.js .reveal.is-in { opacity: 1; transform: none; filter: none; }
+
+
+/* ---------- 10. PHONE LAYOUT ---------- */
+@media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { border-right: 0; border-bottom: 1px solid var(--line); }
+    .photo { max-width: 260px; margin-left: auto; margin-right: auto; }
+    .refs { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+    body { padding: 70px 10px 40px; font-size: 15px; }
+    .tool-link { font-size: .82rem; }
+    .tool-btn { padding: 8px 14px; font-size: .78rem; }
+    .resume-header { padding-top: 40px; }
+    .kpis { width: 100%; }
+    .kpis li { flex: 1; min-width: 0; padding: 12px 6px; }
+    .kpi-num { font-size: 2.1rem; }
+    .cards { grid-template-columns: 1fr; }
+    .sidebar, .main { padding: 28px 18px; }
+}
+
+
+/* ---------- 11. REDUCED MOTION ---------- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .name .line > span { transform: none; }
+    .js .reveal, .js .block.reveal .card, .js .block.reveal .badges li { opacity: 1; transform: none; filter: none; }
+    .js .photo img { filter: none; }
+}
+
+
+/* ---------- 12. PRINT ----------
+   When you press Print (or Save as PDF), the browser uses these
+   rules instead. Dark backgrounds waste ink, so the page turns
+   white with black text and gold accents, the toolbar disappears,
+   every animation is skipped, and it fits on one Letter page. */
+@media print {
+    @page { size: letter; margin: .35in .4in; }
+
+    /* Most sizes in this file use rem (relative to <html>), so shrinking
+       the root font here shrinks the whole resume in one move. */
+    html { font-size: 10px; }
+
+    body {
+        padding: 0;
+        background: #fff;
+        color: #111;
+        font-size: 9.6pt;
+        line-height: 1.38;
+    }
+    .toolbar, .progress-bar { display: none; }
+
+    /* everything visible and finished, no half played animations */
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .js .reveal, .js .block.reveal .card, .js .block.reveal .badges li { opacity: 1 !important; transform: none !important; filter: none !important; }
+    .name .line > span { transform: none !important; }
+    .js .photo img { filter: none !important; }
+    .js .side-block.reveal .bar span { width: var(--level) !important; }
+    .timeline::after { height: calc(100% - 16px) !important; }
+    .js .block.reveal mark { background-size: 100% 45% !important; }
+
+    /* keep the gold colors when printing */
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+    /* the rotating title could be caught mid swap, so pin it in place */
+    .rotator-word { opacity: 1 !important; transform: none !important; }
+
+    /* ONE PAGE LAYOUT: narrow sidebar, wide main column, training cards
+       in one row of four, awards side by side, references in three columns. */
+    body { line-height: 1.3; }
+    .sheet { max-width: none; border: 0; border-radius: 0; box-shadow: none; background: #fff; }
+    .sheet-footer { display: none; }
+
+    /* header: name on the left, the three numbers on the right, one row */
+    .resume-header { flex-wrap: nowrap; padding: 12px 0 10px; background: #fff; border-bottom: 2px solid #111; }
+    .resume-header::before { height: 4px; }
+    .name { font-size: 38pt; color: #111; }
+    .role { color: #444; font-size: 16pt; margin: 2px 0 4px; }
+    .rotator { color: var(--gold-deep); }
+    .tagline, .kpi-label { color: #444; }
+    .kpis { flex: none; }
+    .kpis li { border-color: #ccc; background: #fff; padding: 6px 10px; min-width: 80px; }
+    .kpi-num { color: var(--gold-deep); font-size: 20pt; }
+
+    /* columns (!important beats the phone rule that stacks them) */
+    .layout { grid-template-columns: 1.85in 1fr !important; }
+    .sidebar { padding: 12px 14px 0 0; background: #fff; border-right: 1px solid #ccc; }
+    .main { padding: 8px 0 0 16px; }
+    .side-block, .block { margin-bottom: 6px; }
+    .side-block h2, .block h2 { color: #111; font-size: 12.5pt; margin-bottom: 4px; }
+
+    /* sidebar */
+    .photo { max-width: 1.5in; margin: 0 auto 10px; padding: 3px; }
+    .contact li { margin-bottom: 3px; font-size: 8.5pt; }
+    .contact a, .chips a { color: #111; }
+    .plain li { margin-bottom: 1px; font-size: 8.5pt; }
+    .skills li { margin-bottom: 5px; }
+    .skill-name { font-size: 8.5pt; margin-bottom: 2px; }
+    .bar { background: #e3e3e3; height: 5px; }
+    .bar span { box-shadow: none; }
+    .chips li { background: #fff; border-color: #ccc; font-size: 7.5pt; padding: 2px 8px; }
+
+    /* main column */
+    .contact li, .plain li, .summary, .job ul, .card p, .meta time { color: #333; }
+    .summary { font-size: 8.4pt; }
+    mark { color: #111; }
+    .job { margin-bottom: 6px; break-inside: avoid; }
+    .job h3 { font-size: 11.5pt; }
+    .job li { margin-bottom: 1px; font-size: 8.1pt; }
+    .job::before { background: #fff; box-shadow: 0 0 0 3px #fff; }
+    .meta { margin: 0 0 3px; font-size: 8.5pt; }
+    .org { color: var(--gold-deep); }
+    .timeline::before { background: #ddd; }
+    .timeline::after { box-shadow: none; }
+
+    .cards { grid-template-columns: repeat(4, 1fr) !important; gap: 6px; }
+    .card { padding: 6px 10px; background: #fff; border-color: #ccc; }
+    .card h3 { font-size: 9.5pt; line-height: 1.15; color: var(--gold-deep); }
+    .card p { font-size: 7.8pt; line-height: 1.25; }
+
+    /* awards: plain block lines so the small note wraps with the text */
+    .badges { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .badges li { display: block; padding: 3px 8px; border-color: #c9a227; font-size: 8pt; line-height: 1.3; }
+    .badge-icon { display: inline-grid; width: 16px; height: 16px; margin-right: 4px; vertical-align: -3px; font-size: 8pt; }
+
+    .refs { grid-template-columns: repeat(3, 1fr) !important; gap: 6px; }
+    .refs blockquote { padding: 8px 10px; background: #fff; border-color: #ccc; break-inside: avoid; }
+    .refs p { color: #111; font-size: 7.6pt; margin-bottom: 3px; }
+    .refs footer { color: var(--gold-deep); font-size: 8pt; }
+    .refs footer span { color: #444; }
+}

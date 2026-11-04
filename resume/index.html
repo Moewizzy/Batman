@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  ============================================================
+  BATMAN'S RESUME
+  ------------------------------------------------------------
+  A one page resume for the Dark Knight, built as its own mini
+  site inside the "resume" folder so it can be opened, shared,
+  or submitted on its own. It has its own index.html, style.css,
+  script.js, and img folder (nothing depends on files outside).
+
+  HOW IT IS BUILT
+  - Two column layout: a sidebar (photo, contact, skills,
+    languages, gear) and a main column (summary, experience,
+    training, awards, references).
+  - Semantic HTML: header, aside, main, section, article, time,
+    address. Screen readers and search engines understand it.
+  - Effects borrowed from the EVOGENCY Motion Catalog are tagged
+    CATALOG: "Card name", same as the belt page.
+  - A print stylesheet (bottom of style.css) turns the dark page
+    into a clean white one page resume when you press Print.
+  - Writing style follows resume rules: no dashes, no colons in
+    sentences, short punchy bullets that start with a verb and
+    end with a result.
+  ============================================================
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Resume of Batman, Protector of Gotham City. Detective, strategist, and founder of the Justice League.">
+    <meta name="theme-color" content="#07080b">
+
+    <!-- runs before paint so the reveal effects only hide things when JavaScript works -->
+    <script>document.documentElement.classList.add("js");</script>
+
+    <!-- same fonts as the belt page, so both pages feel like one brand -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <title>Batman | Resume</title>
+</head>
+
+<body>
+    <!-- CATALOG: "Top progress bar" -->
+    <div class="progress-bar" aria-hidden="true"></div>
+
+    <!-- Toolbar: back to the belt page, and print the resume.
+         It is hidden when printing (see @media print in style.css). -->
+    <div class="toolbar">
+        <!-- ../ means "go up one folder", back to the belt page -->
+        <a class="tool-link" href="../index.html"><span aria-hidden="true">&larr;</span> Back to the Belt</a>
+        <!-- CATALOG: "Button shine" -->
+        <button class="tool-btn shine" type="button" id="print-btn">Print or Save as PDF</button>
+    </div>
+
+    <!-- The paper. Everything inside is the actual resume. -->
+    <div class="sheet">
+
+        <!-- ===================== HEADER ===================== -->
+        <!-- CATALOG: "Cursor spotlight"  |  soft gold light follows the mouse across the header -->
+        <header class="resume-header">
+            <div class="name-block">
+                <p class="eyebrow">Candidate profile</p>
+                <!-- CATALOG: "Masked line rise" -->
+                <h1 class="name"><span class="line"><span>Batman</span></span></h1>
+                <!-- CATALOG: "Rotating word"  |  the job title cycles through his roles -->
+                <p class="role">
+                    <span class="role-fixed">World's Greatest</span>
+                    <span class="rotator" aria-live="polite"><span class="rotator-word">Detective</span></span>
+                </p>
+                <p class="tagline">Protector of Gotham City. Founder of the Justice League. Available nights, weekends, and holidays.</p>
+            </div>
+
+            <!-- CATALOG: "Count up"  |  headline numbers roll up on load -->
+            <ul class="kpis" aria-label="Career highlights">
+                <li><span class="kpi-num" data-count="20" data-suffix="+">20+</span><span class="kpi-label">Years on patrol</span></li>
+                <li><span class="kpi-num" data-count="127">127</span><span class="kpi-label">Fighting styles</span></li>
+                <li><span class="kpi-num" data-count="0">0</span><span class="kpi-label">Superpowers needed</span></li>
+            </ul>
+        </header>
+
+        <div class="layout">
+
+            <!-- ===================== SIDEBAR ===================== -->
+            <aside class="sidebar">
+                <!-- CATALOG: "Photo that develops like a Polaroid" (softer version, no tilt) -->
+                <figure class="photo reveal">
+                    <img src="img/Batman_29.webp" alt="Batman in his gray and blue suit with the gold utility belt" width="690" height="800">
+                </figure>
+
+                <section class="side-block reveal" aria-labelledby="contact-h">
+                    <h2 id="contact-h">Contact</h2>
+                    <!-- <address> is the correct HTML tag for contact details -->
+                    <address>
+                        <ul class="contact">
+                            <li><span class="ico" aria-hidden="true">&#9993;</span><a href="mailto:contact@example.com">contact@example.com</a></li>
+                            <li><span class="ico" aria-hidden="true">&#9742;</span><a href="tel:1234567890">123 456 7890</a></li>
+                            <li><span class="ico" aria-hidden="true">&#9906;</span>Gotham City, New Jersey</li>
+                            <li><span class="ico" aria-hidden="true">&#9728;</span>Fastest reply method is the Bat Signal</li>
+                        </ul>
+                    </address>
+                </section>
+
+                <!-- CATALOG: "Result bars and rings"  |  skill bars fill to their level when they scroll in.
+                     --level is the percentage, set right in the HTML so it is easy to change. -->
+                <section class="side-block reveal" aria-labelledby="skills-h">
+                    <h2 id="skills-h">Core Skills</h2>
+                    <ul class="skills">
+                        <li><span class="skill-name">Detective Work</span><span class="bar" style="--level:100%" role="img" aria-label="Expert"><span></span></span></li>
+                        <li><span class="skill-name">Martial Arts</span><span class="bar" style="--level:98%" role="img" aria-label="Expert"><span></span></span></li>
+                        <li><span class="skill-name">Strategy and Planning</span><span class="bar" style="--level:97%" role="img" aria-label="Expert"><span></span></span></li>
+                        <li><span class="skill-name">Engineering and Gadgets</span><span class="bar" style="--level:92%" role="img" aria-label="Advanced"><span></span></span></li>
+                        <li><span class="skill-name">Stealth</span><span class="bar" style="--level:95%" role="img" aria-label="Expert"><span></span></span></li>
+                        <li><span class="skill-name">Forensic Science</span><span class="bar" style="--level:90%" role="img" aria-label="Advanced"><span></span></span></li>
+                        <li><span class="skill-name">Small Talk</span><span class="bar" style="--level:15%" role="img" aria-label="Needs work"><span></span></span></li>
+                    </ul>
+                </section>
+
+                <section class="side-block reveal" aria-labelledby="tools-h">
+                    <h2 id="tools-h">Tools and Gear</h2>
+                    <!-- CATALOG: "Icon micro reactions"  |  chips lift and glow on hover -->
+                    <ul class="chips">
+                        <li><a href="../index.html">Utility Belt MK 19</a></li>
+                        <li>Batmobile</li>
+                        <li>Batcomputer</li>
+                        <li>Grappling Hook</li>
+                        <li>Batarangs</li>
+                        <li>Cape Glider</li>
+                        <li>Cryptographic Sequencer</li>
+                        <li>Batwing</li>
+                    </ul>
+                </section>
+
+                <section class="side-block reveal" aria-labelledby="lang-h">
+                    <h2 id="lang-h">Languages</h2>
+                    <ul class="plain">
+                        <li>English, native</li>
+                        <li>Mandarin, Russian, Arabic, and French, fluent</li>
+                        <li>Morse code, fluent</li>
+                        <li>Bat Signal, fluent</li>
+                    </ul>
+                </section>
+            </aside>
+
+            <!-- ===================== MAIN COLUMN ===================== -->
+            <main class="main">
+
+                <section class="block reveal" aria-labelledby="summary-h">
+                    <h2 id="summary-h">Professional Summary</h2>
+                    <!-- CATALOG: "Highlighter sweep"  |  key phrases get a gold marker swipe when they scroll in -->
+                    <p class="summary">
+                        Night shift crime fighter with over twenty years of experience keeping Gotham City safe without a single superpower.
+                        Known for <mark>solving cases nobody else can crack</mark>, building custom gear in house, and showing up exactly when people need help most.
+                        Brings <mark>world class preparation</mark>, a calm head under pressure, and a firm rule against hurting anyone who can be stopped another way.
+                        Seeking a long term role protecting the innocent. Happy to work alone, but leads teams of superheroes very well.
+                    </p>
+                </section>
+
+                <!-- CATALOG: "Timeline that draws itself"  |  the gold line grows down through the jobs as you scroll -->
+                <section class="block reveal" aria-labelledby="exp-h">
+                    <h2 id="exp-h">Experience</h2>
+                    <div class="timeline">
+                        <article class="job">
+                            <header>
+                                <h3>Protector of Gotham City</h3>
+                                <p class="meta"><span class="org">Self employed, Gotham City</span><time>2005 to Present</time></p>
+                            </header>
+                            <ul>
+                                <li>Patrol every night of the year across 7 districts, cutting response time to a crime in progress to under 4 minutes.</li>
+                                <li>Solved hundreds of cases involving Gotham's toughest villains, then handed every one to the police and courts.</li>
+                                <li>Rescued thousands of citizens from fires, floods, collapsing bridges, and chemical attacks.</li>
+                                <li>Designed and field tested the Utility Belt MK 19, carrying 30 tools in 12 pouches with a draw time under half a second.</li>
+                            </ul>
+                        </article>
+
+                        <article class="job">
+                            <header>
+                                <h3>Founding Member</h3>
+                                <p class="meta"><span class="org">Justice League, Worldwide</span><time>2011 to Present</time></p>
+                            </header>
+                            <ul>
+                                <li>Helped found the world's top superhero team and wrote its plans for nearly every emergency.</li>
+                                <li>Coordinated missions for heroes with powers far beyond his own, and kept the team on schedule.</li>
+                                <li>Built and ran the team's satellite headquarters and its worldwide monitoring system.</li>
+                            </ul>
+                        </article>
+
+                        <article class="job">
+                            <header>
+                                <h3>Mentor and Team Lead</h3>
+                                <p class="meta"><span class="org">The Bat Family, Gotham City</span><time>2008 to Present</time></p>
+                            </header>
+                            <ul>
+                                <li>Trained several young heroes who went on to protect cities of their own.</li>
+                                <li>Built a team culture around discipline, teamwork, and never giving up on anyone.</li>
+                            </ul>
+                        </article>
+
+                        <article class="job">
+                            <header>
+                                <h3>Lead Investigator</h3>
+                                <p class="meta"><span class="org">Partnership with Gotham City Police Department</span><time>2006 to Present</time></p>
+                            </header>
+                            <ul>
+                                <li>Worked side by side with Commissioner Gordon on the city's hardest cases.</li>
+                                <li>Delivered evidence clean enough to hold up in court, every single time.</li>
+                            </ul>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="block reveal" aria-labelledby="train-h">
+                    <h2 id="train-h">Training and Education</h2>
+                    <!-- CATALOG: "Scroll cascade"  |  cards float in one after another -->
+                    <div class="cards">
+                        <div class="card"><h3>Criminology and Forensics</h3><p>Studied under top detectives and scientists on four continents.</p></div>
+                        <div class="card"><h3>Martial Arts Mastery</h3><p>Trained in 127 fighting styles with masters around the world.</p></div>
+                        <div class="card"><h3>Engineering</h3><p>Self taught in mechanical, electrical, and software design with help from Lucius Fox.</p></div>
+                        <div class="card"><h3>Escape Artistry</h3><p>Can get out of locks, chains, and sealed rooms faster than most people find their keys.</p></div>
+                    </div>
+                </section>
+
+                <section class="block reveal" aria-labelledby="awards-h">
+                    <h2 id="awards-h">Awards and Recognition</h2>
+                    <!-- CATALOG: "Badge stamp"  |  each award badge stamps down onto the page -->
+                    <ul class="badges">
+                        <li><span class="badge-icon" aria-hidden="true">&#9733;</span>Key to Gotham City <small>(declined, too busy)</small></li>
+                        <li><span class="badge-icon" aria-hidden="true">&#9733;</span>Most Feared by Villains, every year since 2005</li>
+                        <li><span class="badge-icon" aria-hidden="true">&#9733;</span>Perfect attendance on the night shift</li>
+                    </ul>
+                </section>
+
+                <section class="block reveal" aria-labelledby="refs-h">
+                    <h2 id="refs-h">References</h2>
+                    <!-- CATALOG: "Review card stack" (laid flat here)  |  quote cards with a soft lift on hover -->
+                    <div class="refs">
+                        <blockquote>
+                            <p>"Master Bruce, I mean, the Batman, has never once missed a night. I would know. I make his coffee."</p>
+                            <footer>Alfred Pennyworth <span>Butler and Head of Operations</span></footer>
+                        </blockquote>
+                        <blockquote>
+                            <p>"When I switch on that signal, he comes. Every time. That is all a city could ask for."</p>
+                            <footer>James Gordon <span>Police Commissioner, Gotham City</span></footer>
+                        </blockquote>
+                        <blockquote>
+                            <p>"Every gadget I hand him, he makes better. Best client I have ever had."</p>
+                            <footer>Lucius Fox <span>Wayne Enterprises Applied Sciences</span></footer>
+                        </blockquote>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- KEPT from the belt page: the same footer line so both pages match -->
+        <footer class="sheet-footer">
+            <p>&copy; <span id="year">2026</span> Batman's Gadgets. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  ============================================================
+  BATMAN'S UTILITY BELT  |  Enhanced edition
+  ------------------------------------------------------------
+  WHAT CHANGED FROM THE ORIGINAL (batmanResume):
+  1. Layout rebuilt into clear sections: hero, schematic, why,
+     stats, specs, gadgets, checklist, patrol timeline, wearer
+     dossier, FAQ, contact footer.
+  2. Content expanded a lot. The belt now has a real story:
+     what it is made of, what it carries, why it beats every
+     other belt in Gotham, and how it works through a night.
+     Most details come straight from the schematic image
+     (Waynex composite, toxin resistant, homing beacon, etc.).
+  3. Motion and interaction borrowed from the EVOGENCY Motion
+     Catalog. Every borrowed effect is tagged in a comment
+     like this:  CATALOG: "Card name"
+  4. Accessibility pass: real buttons for flip cards, alt
+     text that describes the images, a skip link, and every
+     animation turns off for people who ask their device for
+     reduced motion.
+  5. The original lists are still here (ol for specs, ul for
+     gadgets, nav, hr, img, footer, media query) so the page
+     still meets the HTML and CSS module requirements.
+  ============================================================
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- NEW: a description for search engines and link previews -->
+    <meta name="description" content="Meet Batman's Utility Belt, model MK 19-WT750144542-OR. Specs, gadgets, and why it is the most trusted piece of gear in Gotham City.">
+    <!-- NEW: theme color so phone browser bars turn Gotham black -->
+    <meta name="theme-color" content="#07080b">
+
+    <!-- NEW: two Google Fonts. Bebas Neue for the big headline look,
+         Inter for easy reading. If you are offline the page falls back
+         to system fonts and still looks fine. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- NEW: tiny inline script. It runs before the page paints and tags <html>
+         with "js", so the scroll reveal styles only kick in when JavaScript works.
+         If JavaScript is off, every section simply shows. -->
+    <script>document.documentElement.classList.add("js");</script>
+
+    <link rel="stylesheet" href="style.css">
+    <!-- defer = the script waits until the HTML is fully read, same as the original -->
+    <script src="script.js" defer></script>
+    <title>Batman's Utility Belt | MK 19</title>
+</head>
+
+<body>
+    <!-- NEW: skip link. Keyboard users can jump past the menu straight to the content. -->
+    <a class="skip-link" href="#main">Skip to the belt</a>
+
+    <!-- CATALOG: "Top progress bar"  |  a thin gold line that fills as you scroll -->
+    <div class="progress-bar" aria-hidden="true"></div>
+
+    <!-- ===================== NAVIGATION ===================== -->
+    <!-- CATALOG: "Shrinking menu bar"  |  the bar gets slimmer once you scroll
+         CATALOG: "Morphing menu highlight" + "You are here highlight"  |  one gold
+         pill glides behind whichever link you hover or whichever section you are in.
+         FIX: the original nav was never closed, so the whole page sat inside it. -->
+    <nav class="navbar" aria-label="Main menu">
+        <a class="brand" href="#home" aria-label="Back to the top">
+            <svg class="bat-logo" viewBox="0 0 100 40" aria-hidden="true">
+                <path d="M50 9 L52.5 2 L54.5 9.5 C62 8 70 10 74 15 C78 9 88 6 100 8 C92 12 90 20 92 28 C86 24 78 25 74 31 C70 27 62 28 58 34 C55 30 52 31 50 38 C48 31 45 30 42 34 C38 28 30 27 26 31 C22 25 14 24 8 28 C10 20 8 12 0 8 C12 6 22 9 26 15 C30 10 38 8 45.5 9.5 L47.5 2 Z"/>
+            </svg>
+            <span>MK 19</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#schematic">Schematic</a></li>
+            <li><a href="#list">Gadgets List</a></li>
+            <li><a href="#patrol">On Patrol</a></li>
+            <li><a href="#footer">Contact</a></li>
+            <!-- NEW: link to Batman's resume, which lives in the resume subfolder -->
+            <li><a href="resume/index.html">Resume</a></li>
+        </ul>
+        <!-- the gliding pill. JavaScript moves it. -->
+        <span class="nav-pill" aria-hidden="true"></span>
+    </nav>
+
+    <main id="main">
+
+        <!-- ===================== HERO ===================== -->
+        <!-- CATALOG: "Cursor spotlight"  |  a soft light follows your mouse across the hero -->
+        <header class="hero" id="home">
+            <div class="hero-inner">
+                <p class="eyebrow reveal">Wayne Enterprises Applied Sciences</p>
+
+                <!-- CATALOG: "Masked line rise"  |  each line slides up out of a hidden mask
+                     CATALOG: "Flowing gradient text"  |  the gold words shimmer like polished metal -->
+                <h1 class="hero-title">
+                    <span class="line"><span>This is Batman's</span></span>
+                    <span class="line"><span class="gold-flow">Utility Belt</span></span>
+                </h1>
+
+                <h2 class="hero-sub reveal">Use me for your adventures! Twelve pouches, zero wasted space, and an answer for every problem Gotham can throw at you.</h2>
+
+                <!-- CATALOG: "Decode scramble"  |  the model number scrambles like a code, then locks in -->
+                <p class="model reveal">Model No. <span class="scramble" data-text="MK 19-WT750144542-OR">MK 19-WT750144542-OR</span></p>
+
+                <div class="hero-actions reveal">
+                    <!-- CATALOG: "Button shine"  |  a glint sweeps across the main button -->
+                    <a class="btn btn-gold shine" href="#schematic">See the Schematic</a>
+                    <!-- CATALOG: "Button fill and arrow"  |  the outline button fills and its arrow slides -->
+                    <a class="btn btn-ghost" href="#list">Browse Gadgets <span class="arrow" aria-hidden="true">&rarr;</span></a>
+                </div>
+            </div>
+
+            <!-- CATALOG: "Scroll cue"  |  a small bouncing hint that there is more below -->
+            <a class="scroll-cue" href="#schematic" aria-label="Scroll down">
+                <span></span>
+            </a>
+        </header>
+
+        <!-- ===================== SCHEMATIC ===================== -->
+        <section class="schematic section" id="schematic">
+            <div class="section-head reveal">
+                <p class="eyebrow">Classified blueprint</p>
+                <h2>The Belt, Up Close</h2>
+            </div>
+
+            <!-- CATALOG: "3D tilt" + "Glass glare"  |  the blueprint leans toward your mouse
+                 and a glare slides over it like light on a screen.
+                 OURS (not in the catalog): a green scanner line sweeps down, like the Batcomputer reading it. -->
+            <figure class="tilt reveal">
+                <div class="tilt-inner">
+                    <img src="img/batman_arkham_origins_utility_belt_schematics_by_ravendeviant_dd1w6f4-fullview.jpg"
+                         alt="Technical schematic of the utility belt showing the rebreather, field medical kit, lock pick tools, smoke pellets, grenade canisters, bat bugs, and the tracking device in the buckle"
+                         width="1600" height="900" loading="lazy">
+                    <span class="glare" aria-hidden="true"></span>
+                    <span class="scanline" aria-hidden="true"></span>
+                </div>
+                <figcaption>Displayed configuration is typical. The belt can be reloaded for any mission in under a minute.</figcaption>
+            </figure>
+        </section>
+
+        <hr class="divider">
+
+        <!-- ===================== WHY IT EXISTS ===================== -->
+        <section class="why section" id="why">
+            <p class="eyebrow reveal">Why this belt matters</p>
+            <!-- CATALOG: "Words light up as you read"  |  the paragraph brightens word by word as you scroll -->
+            <p class="title read-light">
+                This is Batman's gadget belt, the one piece of gear he never leaves the cave without. Some of its tools are built for stealth and some are built for the fight, but every single one earns its spot. Batman has no superpowers. He cannot fly, he is not bulletproof, and he cannot see through walls. What he has is preparation, and this belt is preparation you can wear. When a plan falls apart on a rooftop at two in the morning, the answer is almost always somewhere on his waist.
+            </p>
+        </section>
+
+        <!-- ===================== STATS ===================== -->
+        <!-- CATALOG: "Count up"  |  the numbers roll up when they come into view -->
+        <section class="stats section" aria-label="Belt by the numbers">
+            <div class="stat reveal" style="--i:0">
+                <span class="stat-num" data-count="12">12</span>
+                <span class="stat-label">Quick release pouches</span>
+            </div>
+            <div class="stat reveal" style="--i:1">
+                <span class="stat-num" data-count="30" data-suffix="+">30+</span>
+                <span class="stat-label">Tools on board</span>
+            </div>
+            <div class="stat reveal" style="--i:2">
+                <span class="stat-num" data-count="0.4" data-decimals="1" data-suffix="s">0.4s</span>
+                <span class="stat-label">Average draw time</span>
+            </div>
+            <div class="stat reveal" style="--i:3">
+                <span class="stat-num" data-count="9">9</span>
+                <span class="stat-label">Hazards it is rated against</span>
+            </div>
+        </section>
+
+        <!-- ===================== SPECS + GADGETS (the original #list) ===================== -->
+        <section class="section" id="list">
+            <div class="section-head reveal">
+                <p class="eyebrow">Built by Wayne Enterprises</p>
+                <h2>Belt's Specs and Technology</h2>
+                <p class="lead">The belt is made from Waynex composite, a lab grown fiber that is lighter than leather and tougher than steel plate. Here is what that buys him.</p>
+            </div>
+
+            <!-- KEPT: the original ordered list, now as cards.
+                 CATALOG: "Scroll cascade"  |  cards float in one after another (the --i number sets the delay)
+                 CATALOG: "Border trace"  |  a gold line runs around the card edge on hover
+                 CATALOG: "Line drawing icons"  |  each icon draws itself in when the card appears -->
+            <ol class="spec-grid">
+                <li class="spec reveal" style="--i:0">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M12 2c1 4 5 6 5 11a5 5 0 0 1-10 0c0-3 2-4 2-7 2 1 3 3 3 5 1-1 1-3 0-9z"/></svg>
+                    <h3>Fire Resistant</h3>
+                    <p>Holds its shape at over 1,000 degrees. He can sprint through a burning warehouse and every pouch still opens.</p>
+                </li>
+                <li class="spec reveal" style="--i:1">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M12 2.5S5 10 5 15a7 7 0 0 0 14 0c0-5-7-12.5-7-12.5z"/></svg>
+                    <h3>Waterproof</h3>
+                    <p>Sealed to 100 meters. Gotham Harbor is cold, dark, and deep, and the gear inside comes out bone dry.</p>
+                </li>
+                <li class="spec reveal" style="--i:2">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+                    <h3>Shockproof</h3>
+                    <p>Non conductive, so a jolt from a villain's gadget never reaches the electronics or the man wearing it.</p>
+                </li>
+                <li class="spec reveal" style="--i:3">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M12 2 4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5z"/><path pathLength="1" d="m9 12 2 2 4-4"/></svg>
+                    <h3>Corrosion Resistant</h3>
+                    <p>Shrugs off acid and toxins. Chemical plant showdowns are a normal Tuesday in Gotham, and this belt is ready for them.</p>
+                </li>
+                <li class="spec reveal" style="--i:4">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M12 3c-4 4-8 6-8 11a8 8 0 0 0 16 0c0-5-4-7-8-11z"/><path pathLength="1" d="M12 9v9"/></svg>
+                    <h3>Lightweight</h3>
+                    <p>Fully loaded it weighs less than a laptop. Nothing slows him down on a jump between rooftops.</p>
+                </li>
+                <li class="spec reveal" style="--i:5">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle pathLength="1" cx="12" cy="12" r="9"/><circle pathLength="1" cx="12" cy="12" r="4"/><path pathLength="1" d="M12 3v2M12 19v2M3 12h2M19 12h2"/></svg>
+                    <h3>Always Trackable</h3>
+                    <p>The buckle hides a homing beacon. If he goes quiet, Alfred knows exactly where to send help.</p>
+                </li>
+            </ol>
+
+            <div class="section-head reveal gadgets-head">
+                <p class="eyebrow">Tap or hover a card to flip it</p>
+                <h2>What's in the Pouches</h2>
+            </div>
+
+            <!-- KEPT: the original unordered list (Grappling Hook, Batarang, Smoke Pellets) plus five more.
+                 CATALOG: "Card flip"  |  the front shows the gadget, the back explains why it matters.
+                 Each card is a real button, so it works with a keyboard and a screen reader. -->
+            <ul class="gadget-grid">
+                <li class="reveal" style="--i:0">
+                    <button class="flip" type="button" aria-pressed="false">
+                        <span class="face front"><span class="tag">Mobility</span><span class="g-name">Grappling Hook</span><span class="g-hint">Flip for details</span></span>
+                        <span class="face back"><span class="g-name">Grappling Hook</span>Fires a line that bites into stone or steel and pulls him up a twenty story building in seconds. Gotham has no elevators fast enough.</span>
+                    </button>
+                </li>
+                <li class="reveal" style="--i:1">
+                    <button class="flip" type="button" aria-pressed="false">
+                        <span class="face front"><span class="tag">Signature</span><span class="g-name">Batarang</span><span class="g-hint">Flip for details</span></span>
+                        <span class="face back"><span class="g-name">Batarang</span>The classic. Comes in standard, sonic, thermal, and remote control versions. It disarms, distracts, and always comes back around.</span>
+                    </button>
+                </li>
+                <li class="reveal" style="--i:2">
+                    <button class="flip" type="button" aria-pressed="false">
+                        <span class="face front"><span class="tag">Stealth</span><span class="g-name">Smoke Pellets</span><span class="g-hint">Flip for details</span></span>
+                        <span class="face back"><span class="g-name">Smoke Pellets</span>One drop and the room fills with smoke. By the time it clears he is gone, and that is how the legend stays a legend.</span>
+                    </button>
+                </li>
+                <li class="reveal" style="--i:3">
+                    <button class="flip" type="button" aria-pressed="false">
+                        <span class="face front"><span class="tag">Tech</span><span class="g-name">Cryptographic Sequencer</span><span class="g-hint">Flip for details</span></span>
+                        <span class="face back"><span class="g-name">Cryptographic Sequencer</span>Cracks a security panel faster than the guard can finish his coffee. Locked doors are only a suggestion.</span>
+                    </button>
+                </li>
+                <li class="reveal" style="--i:4">
+                    <button class="flip" type="button" aria-pressed="false">
+                        <span class="face front"><span class="tag">Survival</span><span class="g-name">Rebreather</span><span class="g-hint">Flip for details</span></span>
+                        <span class="face back"><span class="g-name">Rebreather</span>Clean air for underwater rescues and gas filled rooms. When a villain floods a hideout with fear toxin, he keeps breathing easy.</span>
+                    </button>
+                </li>
+                <li class="reveal" style="--i:5">
+                    <button class="flip" type="button" aria-pressed="false">
+                        <span class="face front"><span class="tag">Recon</span><span class="g-name">Bat Bugs</span><span class="g-hint">Flip for details</span></span>
+                        <span class="face back"><span class="g-name">Bat Bugs</span>Tiny audio and video trackers. Stick one on a getaway car and the Batcomputer follows it all the way home.</span>
+                    </button>
+                </li>
+                <li class="reveal" style="--i:6">
+                    <button class="flip" type="button" aria-pressed="false">
+                        <span class="face front"><span class="tag">Rescue</span><span class="g-name">Field Medical Kit</span><span class="g-hint">Flip for details</span></span>
+                        <span class="face back"><span class="g-name">Field Medical Kit</span>Bandages, splints, and antidotes. Half his nights end with patching up someone else, and he is always ready to.</span>
+                    </button>
+                </li>
+                <li class="reveal" style="--i:7">
+                    <button class="flip" type="button" aria-pressed="false">
+                        <span class="face front"><span class="tag">Crowd Control</span><span class="g-name">Freeze and Glue Grenades</span><span class="g-hint">Flip for details</span></span>
+                        <span class="face back"><span class="g-name">Freeze and Glue Grenades</span>Pins a getaway crew to the floor without hurting anyone. The police show up to find them stuck and waiting.</span>
+                    </button>
+                </li>
+            </ul>
+        </section>
+
+        <!-- ===================== WHY IT'S AWESOME ===================== -->
+        <section class="awesome section" id="awesome">
+            <div class="section-head reveal">
+                <p class="eyebrow">The case for the belt</p>
+                <h2>Why This Belt Is Legendary</h2>
+            </div>
+            <!-- CATALOG: "Checklist that ticks itself"  |  each box checks itself off one after another as you scroll in -->
+            <ul class="checklist">
+                <li><span class="box" aria-hidden="true"></span><div><strong>It turns brains into an advantage.</strong> Batman wins by thinking three moves ahead. The belt means the tool for move three is already in his hand.</div></li>
+                <li><span class="box" aria-hidden="true"></span><div><strong>It never runs out of options.</strong> Thirty tools in a strip of gear the width of your hand. No backpack, no bulky case, no fumbling.</div></li>
+                <li><span class="box" aria-hidden="true"></span><div><strong>It protects people, not just Batman.</strong> The medical kit, the rebreather, and the homing beacon exist to save lives, including the lives of the bad guys.</div></li>
+                <li><span class="box" aria-hidden="true"></span><div><strong>It reconfigures for every mission.</strong> Underwater rescue tonight, rooftop chase tomorrow. Swap the pouches and the belt becomes a brand new tool.</div></li>
+                <li><span class="box" aria-hidden="true"></span><div><strong>It is built to last a career.</strong> Fire, water, acid, electricity, and impact proof. This belt has outlived more villains than anyone can count.</div></li>
+            </ul>
+        </section>
+
+        <!-- ===================== A NIGHT ON PATROL ===================== -->
+        <section class="patrol section" id="patrol">
+            <div class="section-head reveal">
+                <p class="eyebrow">Field log</p>
+                <h2>One Night, One Belt</h2>
+                <p class="lead">Want to know why it is the best belt ever made? Follow it through a single shift in Gotham.</p>
+            </div>
+            <!-- CATALOG: "Timeline that draws itself"  |  the gold line grows down the page as you scroll -->
+            <ol class="timeline">
+                <li class="reveal"><span class="time">9:00 PM</span><h3>Suit up</h3><p>Alfred loads the pouches for tonight's mission profile. Grapple, batarangs, smoke, and a fresh medical kit.</p></li>
+                <li class="reveal"><span class="time">10:40 PM</span><h3>Rooftop pursuit</h3><p>The grappling hook carries him across the financial district faster than any car could follow.</p></li>
+                <li class="reveal"><span class="time">12:15 AM</span><h3>The warehouse</h3><p>The cryptographic sequencer opens the door. Smoke pellets clear the room. A glue grenade keeps the crew in place.</p></li>
+                <li class="reveal"><span class="time">1:30 AM</span><h3>The harbor</h3><p>A driver is trapped in a sinking car. The rebreather and the waterproof seals make the rescue possible.</p></li>
+                <li class="reveal"><span class="time">3:00 AM</span><h3>Home safe</h3><p>The homing beacon guides the Batmobile in. Every job got done, and the belt goes back on the rack to be restocked for tomorrow.</p></li>
+            </ol>
+        </section>
+
+        <!-- ===================== THE WEARER ===================== -->
+        <section class="wearer section" id="wearer">
+            <!-- CATALOG: "Photo that develops like a Polaroid"  |  the picture fades in from a dark blur like an instant photo
+                 NEW: this image was in the img folder but never used on the original page -->
+            <figure class="polaroid reveal">
+                <img src="img/Batman_29.webp" alt="Batman standing tall in his gray and blue suit with the gold utility belt around his waist" width="690" height="800" loading="lazy">
+                <figcaption>Authorized wearer</figcaption>
+            </figure>
+
+            <div class="dossier reveal">
+                <p class="eyebrow">Authorized wearer</p>
+                <h2>The Dark Knight</h2>
+                <p>Only one person in Gotham wears this belt. Every pouch is placed so his hand finds it without looking, which is why the draw time is under half a second.</p>
+
+                <!-- CATALOG: "Star rating fill"  |  stars fill from left to right when they come into view -->
+                <dl class="ratings">
+                    <div><dt>Stealth</dt><dd><span class="stars" style="--rating:5" role="img" aria-label="5 out of 5"></span></dd></div>
+                    <div><dt>Preparation</dt><dd><span class="stars" style="--rating:5" role="img" aria-label="5 out of 5"></span></dd></div>
+                    <div><dt>Rescue</dt><dd><span class="stars" style="--rating:4.5" role="img" aria-label="4.5 out of 5"></span></dd></div>
+                    <div><dt>Style</dt><dd><span class="stars" style="--rating:5" role="img" aria-label="5 out of 5"></span></dd></div>
+                </dl>
+            </div>
+        </section>
+
+        <!-- ===================== FAQ ===================== -->
+        <section class="faq section" id="faq">
+            <div class="section-head reveal">
+                <p class="eyebrow">Questions from Gotham</p>
+                <h2>Frequently Asked</h2>
+            </div>
+            <!-- CATALOG: "Smooth FAQ drawers"  |  native details and summary, so it works even with JavaScript off,
+                 and JavaScript adds the smooth open and close -->
+            <div class="faq-list">
+                <details class="reveal">
+                    <summary>How does everything fit in there?</summary>
+                    <div class="faq-body"><p>Smart packing. Each pouch is custom molded around its tool, so there is no wasted space and nothing rattles.</p></div>
+                </details>
+                <details class="reveal">
+                    <summary>Can someone else open the pouches?</summary>
+                    <div class="faq-body"><p>Nope. The quick release latches are keyed to Batman's gloves. To anyone else the belt is a very stylish brick.</p></div>
+                </details>
+                <details class="reveal">
+                    <summary>What happens if it gets damaged?</summary>
+                    <div class="faq-body"><p>Lucius Fox keeps spare pouches in the cave. A full rebuild takes one night, and Batman usually has three backup belts ready.</p></div>
+                </details>
+                <details class="reveal">
+                    <summary>Why gold?</summary>
+                    <div class="faq-body"><p>It draws the eye to the belt and away from his face. A small piece of misdirection that has worked for decades.</p></div>
+                </details>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===================== FOOTER ===================== -->
+    <!-- CATALOG: "Stage spotlight sweep"  |  a Bat Signal beam sweeps the night sky behind the contact info -->
+    <footer id="footer">
+        <div class="signal" aria-hidden="true">
+            <svg class="bat-logo" viewBox="0 0 100 40"><path d="M50 9 L52.5 2 L54.5 9.5 C62 8 70 10 74 15 C78 9 88 6 100 8 C92 12 90 20 92 28 C86 24 78 25 74 31 C70 27 62 28 58 34 C55 30 52 31 50 38 C48 31 45 30 42 34 C38 28 30 27 26 31 C22 25 14 24 8 28 C10 20 8 12 0 8 C12 6 22 9 26 15 C30 10 38 8 45.5 9.5 L47.5 2 Z"/></svg>
+        </div>
+        <h2>Need the Belt? Light the Signal.</h2>
+        <p class="footer-lead">Questions about the gadgets? Reach out and the Batcave will get back to you.</p>
+        <!-- KEPT: the original contact lines, now clickable -->
+        <p><a href="mailto:contact@example.com">contact@example.com</a></p>
+        <p><a href="tel:1234567890">123-456-7890</a></p>
+        <!-- NEW: the year updates itself with JavaScript -->
+        <p class="copyright">&copy; <span id="year">2023</span> Batman's Gadgets. All rights reserved.</p>
+    </footer>
+
+    <!-- CATALOG: "Back to top ring"  |  a ring fills up as you scroll, click it to fly back to the top -->
+    <a class="to-top" href="#home" aria-label="Back to top">
+        <svg viewBox="0 0 44 44" aria-hidden="true">
+            <circle class="ring-bg" cx="22" cy="22" r="20"/>
+            <circle class="ring" cx="22" cy="22" r="20" pathLength="1"/>
+            <path d="M22 28V16M16 21l6-6 6 6"/>
+        </svg>
+    </a>
+</body>
+</html>
